@@ -1,7 +1,7 @@
 services:
   - type: web
+    runtime: docker
     name: guacamole
-    env: docker
     plan: free
     image:
       url: guacamole/guacamole:latest
@@ -14,6 +14,6 @@ services:
         value: localhost
       - key: GUACD_PORT
         value: "4822"
-      # Instead of fromSecret, pull from the group
-      - fromGroup: guacamole-secrets # Use the name of your Environment Group here
+      - key: GUACADMIN_PASSWORD
+        value: your_actual_admin_password_here # FOR TESTING ONLY!
     healthCheckPath: /guacamole
