@@ -15,5 +15,5 @@ services:
       - key: GUACD_PORT
         value: "4822"
       - key: GUACADMIN_PASSWORD
-        value: your_actual_admin_password_here # FOR TESTING ONLY!
+        value: "@dmiN@123#"
     healthCheckPath: /guacamole
