@@ -1,19 +1,19 @@
-services:
-  - type: web
-    name: guacamole
-    env: docker
-    plan: free
-    image: 
-      url: guacamole/guacamole:latest
-    envVars:
-      - key: GUACAMOLE_AUTH_PROVIDER
-        value: mysql
-      - key: GUACAMOLE_HOME
-        value: /home/guacamole
-      - key: GUACD_HOSTNAME
-        value: localhost
-      - key: GUACD_PORT
-        value: "4822"
-      - key: GUACADMIN_PASSWORD
-        fromSecret: guacadmin_password
-    healthCheckPath: /guacamole
+1services:
+2  - type: web
+3    name: guacamole
+4    env: docker
+5    plan: free
+6    image: 
+7      url: guacamole/guacamole:latest
+8    envVars:
+9      - key: GUACAMOLE_AUTH_PROVIDER
+10        value: mysql
+11      - key: GUACAMOLE_HOME
+12        value: /home/guacamole
+13      - key: GUACD_HOSTNAME
+14        value: localhost
+15      - key: GUACD_PORT
+16        value: "4822"
+17      - key: GUACADMIN_PASSWORD # This key will hold the value from the 'guacadmin_password' secret
+18        fromSecret: guacadmin_password
+19    healthCheckPath: /guacamole
