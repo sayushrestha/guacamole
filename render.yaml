@@ -3,17 +3,19 @@ services:
     name: guacamole
     env: docker
     plan: free
-    image: 
-      url: guacamole/guacamole:latest
+    image: guacamole/guacamole:latest  # Simplified image syntax
     envVars:
-      - key: GUACAMOLE_AUTH_PROVIDER
-        value: sqlite
-      - key: GUACAMOLE_HOME
-        value: /home/guacamole
-      - key: GUACD_HOSTNAME
-        value: localhost
-      - key: GUACD_PORT
-        value: "4822"
-      - key: GUACADMIN_PASSWORD
-        fromSecret: guacadmin_password
+      - group: guacamole_secrets  # Using secret group instead of individual fromSecret
+    envVarGroups:
+      - key: guacamole_secrets
+        envVars:
+          - key: GUACADMIN_PASSWORD
+          - key: GUACAMOLE_AUTH_PROVIDER
+            value: sqlite
+          - key: GUACAMOLE_HOME
+            value: /home/guacamole
+          - key: GUACD_HOSTNAME
+            value: localhost
+          - key: GUACD_PORT
+            value: "4822"
     healthCheckPath: /guacamole
