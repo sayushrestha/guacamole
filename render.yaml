@@ -15,27 +15,4 @@ services:
     # Port 8080 is the default for Guacamole web application
     # Health check to ensure the service is running
     healthCheckPath: /guacamole/
-    # Environment variables for database configuration
-    # REPLACE THESE WITH YOUR ACTUAL DATABASE DETAILS
-    envVars:
-      - key: GUACAMOLE_HOME
-        value: /config
-      # Database type (e.g., mysql, postgresql)
-      - key: GUACD_HOSTNAME
-        value: localhost # If guacd is bundled, this can be localhost or omitted
-      - key: GUACD_PORT
-        value: 4822 # Default guacd port
-      # MySQL-specific environment variables have been removed as requested.
-      # You might also need to set GUACAMOLE_AUTH_PROVIDER if you're using a custom one,
-      # or GUACAMOLE_JDBC_DRIVER if you're using a specific JDBC driver not bundled.
-      # For PostgreSQL, you would use:
-      # - key: POSTGRES_HOSTNAME
-      #   value: your_postgres_host
-      # - key: POSTGRES_PORT
-      #   value: 5432
-      # - key: POSTGRES_DATABASE
-      #   value: guacamole_db
-      # - key: POSTGRES_USER
-      #   value: guacamole_user
-      # - key: POSTGRES_PASSWORD
-      #   value: your_postgres_password
+  
