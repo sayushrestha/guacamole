@@ -2,9 +2,9 @@ services:
   - type: web
     name: guacamole
     env: docker
-    plan: starter  # Required for persistent storage
-    image: guacamole/guacamole:latest
-    port: 8080
+    plan: starter
+    image:
+      name: guacamole/guacamole:latest  # Correct image specification
     envVars:
       - key: GUACAMOLE_AUTH_PROVIDER
         value: sqlite
@@ -20,3 +20,4 @@ services:
       name: guacamole_data
       mountPath: /home/guacamole
       sizeGB: 1
+    healthCheckPath: /guacamole/api/health  # Required port specification
