@@ -1,38 +1,50 @@
+# render.yaml for Guacamole Web Service
+# This configuration deploys the Guacamole web application and its guacd component.
+# It assumes you have a separate database service (e.g., PostgreSQL or MySQL)
+# and you will configure its connection details via environment variables.
+
 services:
   - type: web
     runtime: docker
-    name: guacamole
-    # Using the free plan for demonstration. Consider 'starter' or 'pro' for production.
-    plan: free
-    # Specifies the Docker image to use. 'guacamole/guacamole:latest' includes guacd.
-    image:
-      url: guacamole/guacamole:latest
-    # Environment variables for the Guacamole application.
+    name: guacamole-web
+    # Use a stable Guacamole Docker image.
+    # You can find official images on Docker Hub: https://hub.docker.com/r/guacamole/guacamole
+    image: 
+      url: guacamole/guacamole:1.5.3 # Consider using the latest stable version
+    plan: free # Or 'standard' for more resources
+    # Port 8080 is the default for Guacamole web application
+    # Health check to ensure the service is running
+    healthCheckPath: /guacamole/
+    # Environment variables for database configuration
+    # REPLACE THESE WITH YOUR ACTUAL DATABASE DETAILS
     envVars:
-      # Sets the authentication provider to MySQL. You'll need to configure
-      # a separate MySQL database service and provide its connection details.
-      # Example database variables (uncomment and fill in if using MySQL):
-      # - key: MYSQL_HOSTNAME
-      #   value: your-mysql-service-name # e.g., 'guacamole-db'
-      # - key: MYSQL_DATABASE
-      #   value: guacamole_db
-      # - key: MYSQL_USER
-      #   value: guacamole_user
-      # - key: MYSQL_PASSWORD
-      #   fromSecret: mysql_guacamole_password # Define this secret in Render
-      - key: GUACAMOLE_AUTH_PROVIDER
-        value: mysql # Or 'postgresql' if using PostgreSQL
-      # Specifies the home directory for Guacamole configuration.
       - key: GUACAMOLE_HOME
-        value: /home/guacamole
-      # Hostname for guacd. 'localhost' is typical when guacd is bundled in the same image.
+        value: /config
+      # Database type (e.g., mysql, postgresql)
       - key: GUACD_HOSTNAME
-        value: localhost
-      # Port for guacd.
+        value: localhost # If guacd is bundled, this can be localhost or omitted
       - key: GUACD_PORT
-        value: "4822"
-      # The initial administrator password. This value must be set as a secret
-      # in the Render dashboard named 'guacadmin_password'.
-      - key: GUACADMIN_PASSWORD
-        value: guacadmin@123#    # Defines a health check endpoint to ensure the service is running.
-    healthCheckPath: /guacamole
+        value: 4822 # Default guacd port
+      - key: MYSQL_HOSTNAME # Example for MySQL, change if using PostgreSQL
+        value: your_database_host # e.g., your-db-service.render.com
+      - key: MYSQL_PORT # Example for MySQL, change if using PostgreSQL
+        value: 3306 # Default MySQL port, 5432 for PostgreSQL
+      - key: MYSQL_DATABASE # Example for MySQL, change if using PostgreSQL
+        value: guacamole_db
+      - key: MYSQL_USER # Example for MySQL, change if using PostgreSQL
+        value: guacamole_user
+      - key: MYSQL_PASSWORD # Example for MySQL, change if using PostgreSQL
+        value: your_database_password
+      # You might also need to set GUACAMOLE_AUTH_PROVIDER if you're using a custom one,
+      # or GUACAMOLE_JDBC_DRIVER if you're using a specific JDBC driver not bundled.
+      # For PostgreSQL, you would use:
+      # - key: POSTGRES_HOSTNAME
+      #   value: your_postgres_host
+      # - key: POSTGRES_PORT
+      #   value: 5432
+      # - key: POSTGRES_DATABASE
+      #   value: guacamole_db
+      # - key: POSTGRES_USER
+      #   value: guacamole_user
+      # - key: POSTGRES_PASSWORD
+      #   value: your_postgres_password
