@@ -9,8 +9,9 @@ services:
     env: docker
     # Use a stable Guacamole Docker image.
     # You can find official images on Docker Hub: https://hub.docker.com/r/guacamole/guacamole
-    image: guacamole/guacamole:1.5.3 # Consider using the latest stable version
-    plan: starter # Or 'standard' for more resources
+    image: 
+      url: guacamole/guacamole:1.5.3 # Consider using the latest stable version
+    plan: free # Or 'standard' for more resources
     # Port 8080 is the default for Guacamole web application
     port: 8080
     # Health check to ensure the service is running
