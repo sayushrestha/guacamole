@@ -2,8 +2,37 @@ services:
   - type: web
     runtime: docker
     name: guacamole
+    # Using the free plan for demonstration. Consider 'starter' or 'pro' for production.
     plan: free
+    # Specifies the Docker image to use. 'guacamole/guacamole:latest' includes guacd.
     image:
       url: guacamole/guacamole:latest
+    # Environment variables for the Guacamole application.
     envVars:
+      # Sets the authentication provider to MySQL. You'll need to configure
+      # a separate MySQL database service and provide its connection details.
+      # Example database variables (uncomment and fill in if using MySQL):
+      # - key: MYSQL_HOSTNAME
+      #   value: your-mysql-service-name # e.g., 'guacamole-db'
+      # - key: MYSQL_DATABASE
+      #   value: guacamole_db
+      # - key: MYSQL_USER
+      #   value: guacamole_user
+      # - key: MYSQL_PASSWORD
+      #   fromSecret: mysql_guacamole_password # Define this secret in Render
+      - key: GUACAMOLE_AUTH_PROVIDER
+        value: mysql # Or 'postgresql' if using PostgreSQL
+      # Specifies the home directory for Guacamole configuration.
+      - key: GUACAMOLE_HOME
+        value: /home/guacamole
+      # Hostname for guacd. 'localhost' is typical when guacd is bundled in the same image.
+      - key: GUACD_HOSTNAME
+        value: localhost
+      # Port for guacd.
+      - key: GUACD_PORT
+        value: "4822"
+      # The initial administrator password. This value must be set as a secret
+      # in the Render dashboard named 'guacadmin_password'.
+      - key: GUACADMIN_PASSWORD
+        value: guacadmin@123#    # Defines a health check endpoint to ensure the service is running.
     healthCheckPath: /guacamole
