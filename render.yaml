@@ -15,6 +15,5 @@ services:
       - key: GUACD_PORT
         value: "4822"
       - key: GUACADMIN_PASSWORD
-        value: gu@va123!
         fromSecret: guacadmin_password
     healthCheckPath: /guacamole
