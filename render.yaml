@@ -14,6 +14,6 @@ services:
         value: localhost
       - key: GUACD_PORT
         value: "4822"
-      - key: GUACADMIN_PASSWORD
-        value: your_actual_admin_password_here # FOR TESTING ONLY!
+      # Instead of fromSecret, pull from the group
+      - fromGroup: guacamole-secrets # Use the name of your Environment Group here
     healthCheckPath: /guacamole
