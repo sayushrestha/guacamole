@@ -14,6 +14,4 @@ services:
         value: localhost
       - key: GUACD_PORT
         value: "4822"
-      - key: GUACADMIN_PASSWORD
-        value: "@dmiN@123#"
     healthCheckPath: /guacamole
