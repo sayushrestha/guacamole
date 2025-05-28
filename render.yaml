@@ -13,7 +13,6 @@ services:
       url: guacamole/guacamole:1.5.3 # Consider using the latest stable version
     plan: free # Or 'standard' for more resources
     # Port 8080 is the default for Guacamole web application
-    port: 8080
     # Health check to ensure the service is running
     healthCheckPath: /guacamole/
     # Environment variables for database configuration
