@@ -1,26 +1,27 @@
-# Start from the official Guacamole image
 FROM guacamole/guacamole:latest
 
-# Install MySQL server and dependencies
 USER root
+
+# Install MySQL server and client
 RUN microdnf install -y mariadb-server mariadb-connector-java && \
     microdnf clean all
 
-# Configure MySQL
+# Create necessary directories
 RUN mkdir -p /var/run/mysqld && \
     chown mysql:mysql /var/run/mysqld && \
     mkdir -p /var/lib/mysql && \
     chown mysql:mysql /var/lib/mysql
 
-# Copy initialization scripts
-COPY initdb.sql /docker-entrypoint-initdb.d/
-COPY init-guacamole-db.sh /docker-entrypoint-initdb.d/
+# Copy our scripts
+COPY start.sh /start.sh
+COPY init-guacamole-db.sh /init-guacamole-db.sh
 
-# Copy modified entrypoint
-COPY docker-entrypoint.sh /opt/guacamole/bin/
+# Set permissions
+RUN chmod +x /start.sh && \
+    chmod +x /init-guacamole-db.sh
 
-# Ensure proper permissions
-RUN chmod +x /opt/guacamole/bin/docker-entrypoint.sh && \
-    chmod +x /docker-entrypoint-initdb.d/init-guacamole-db.sh
+# Set entrypoint
+ENTRYPOINT ["/start.sh"]
+CMD ["guacamole"]
 
 USER guacamole
