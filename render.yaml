@@ -6,12 +6,4 @@ services:
     image:
       url: guacamole/guacamole:latest
     envVars:
-      - key: GUACAMOLE_AUTH_PROVIDER
-        value: mysql
-      - key: GUACAMOLE_HOME
-        value: /home/guacamole
-      - key: GUACD_HOSTNAME
-        value: localhost
-      - key: GUACD_PORT
-        value: "4822"
     healthCheckPath: /guacamole
