@@ -3,7 +3,7 @@ services:
     name: guacamole
     env: docker
     plan: starter
-    image: docker.io/library/guacamole/guacamole:latest
+    image: guacamole
     envVars:
       - key: GUACAMOLE_AUTH_PROVIDER
         value: sqlite
