@@ -1,15 +1,19 @@
 services:
   - type: web
-    name: django-react-starter
+    name: guacamole
+    env: docker
     plan: free
-    env: python
-    region: frankfurt  # region should be same as your database region.
-    buildCommand: "./build.sh"
-    startCommand: "gunicorn core.wsgi:application"
+    image:
+      url: guacamole/guacamole:latest
     envVars:
-      - key: DEBUG
-        value: False
-      - key: SECRET_KEY
-        generateValue: true
-      - key: WEB_CONCURRENCY
-        value: 4
+      - key: GUACAMOLE_AUTH_PROVIDER
+        value: mysql
+      - key: GUACAMOLE_HOME
+        value: /home/guacamole
+      - key: GUACD_HOSTNAME
+        value: localhost
+      - key: GUACD_PORT
+        value: "4822"
+      - key: GUACADMIN_PASSWORD
+        value: your_actual_admin_password_here # FOR TESTING ONLY!
+    healthCheckPath: /guacamole
