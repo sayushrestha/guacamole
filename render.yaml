@@ -3,8 +3,7 @@ services:
     name: guacamole
     env: docker
     plan: starter
-    image:
-      name: guacamole/guacamole:latest  # Correct image specification
+    image: guacamole/guacamole:latest  # Simple string format
     envVars:
       - key: GUACAMOLE_AUTH_PROVIDER
         value: sqlite
@@ -16,8 +15,8 @@ services:
         value: "4822"
       - key: GUACADMIN_PASSWORD
         fromSecret: guacadmin_password
+    healthCheckPath: /guacamole/api/health
     disk:
       name: guacamole_data
       mountPath: /home/guacamole
       sizeGB: 1
-    healthCheckPath: /guacamole/api/health  # Required port specification
