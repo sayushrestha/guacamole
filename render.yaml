@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: guacamole
+    env: docker
+    plan: starter  # Required for persistent storage
+    image: guacamole/guacamole:latest
+    port: 8080
+    envVars:
+      - key: GUACAMOLE_AUTH_PROVIDER
+        value: sqlite
+      - key: GUACAMOLE_HOME
+        value: /home/guacamole
+      - key: GUACD_HOSTNAME
+        value: localhost
+      - key: GUACD_PORT
+        value: "4822"
+      - key: GUACADMIN_PASSWORD
+        fromSecret: guacadmin_password
+    disk:
+      name: guacamole_data
+      mountPath: /home/guacamole
+      sizeGB: 1
