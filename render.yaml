@@ -5,14 +5,14 @@
 
 services:
   - type: web
-    runtime: docker
     name: guacamole-web
+    env: docker
     # Use a stable Guacamole Docker image.
     # You can find official images on Docker Hub: https://hub.docker.com/r/guacamole/guacamole
-    image: 
-      url: guacamole/guacamole:1.5.3 # Consider using the latest stable version
-    plan: free # Or 'standard' for more resources
+    image: guacamole/guacamole:1.5.3 # Consider using the latest stable version
+    plan: starter # Or 'standard' for more resources
     # Port 8080 is the default for Guacamole web application
+    port: 8080
     # Health check to ensure the service is running
     healthCheckPath: /guacamole/
     # Environment variables for database configuration
@@ -25,16 +25,7 @@ services:
         value: localhost # If guacd is bundled, this can be localhost or omitted
       - key: GUACD_PORT
         value: 4822 # Default guacd port
-      - key: MYSQL_HOSTNAME # Example for MySQL, change if using PostgreSQL
-        value: your_database_host # e.g., your-db-service.render.com
-      - key: MYSQL_PORT # Example for MySQL, change if using PostgreSQL
-        value: 3306 # Default MySQL port, 5432 for PostgreSQL
-      - key: MYSQL_DATABASE # Example for MySQL, change if using PostgreSQL
-        value: guacamole_db
-      - key: MYSQL_USER # Example for MySQL, change if using PostgreSQL
-        value: guacamole_user
-      - key: MYSQL_PASSWORD # Example for MySQL, change if using PostgreSQL
-        value: your_database_password
+      # MySQL-specific environment variables have been removed as requested.
       # You might also need to set GUACAMOLE_AUTH_PROVIDER if you're using a custom one,
       # or GUACAMOLE_JDBC_DRIVER if you're using a specific JDBC driver not bundled.
       # For PostgreSQL, you would use:
