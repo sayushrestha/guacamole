@@ -17,7 +17,3 @@ services:
       - key: GUACADMIN_PASSWORD
         fromSecret: guacadmin_password
     healthCheckPath: /guacamole
-    disk:
-      name: guacamole_data
-      mountPath: /home/guacamole
-      sizeGB: 1
